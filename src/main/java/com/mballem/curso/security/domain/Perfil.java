@@ -1,6 +1,6 @@
 package com.mballem.curso.security.domain;
 
-//import javax.persistence.*;
+//import jakarta.persistence.*;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

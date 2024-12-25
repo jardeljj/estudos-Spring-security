@@ -7,7 +7,7 @@ import jakarta.persistence.MappedSuperclass;
 
 import java.io.Serializable;
 
-//import javax.persistence.*;
+//import jakarta.persistence.*;
 
 @SuppressWarnings("serial")
 @MappedSuperclass
