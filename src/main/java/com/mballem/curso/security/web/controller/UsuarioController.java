@@ -5,6 +5,7 @@ import com.mballem.curso.security.domain.Usuario;
 import com.mballem.curso.security.service.UsuarioService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -46,13 +47,18 @@ public class UsuarioController {
     public String SalvarUsuarios(Usuario usuario, RedirectAttributes attr){
         List<Perfil> perfis = usuario.getPerfis();
         if(perfis.size() > 2 ||
-                perfis.contains(Arrays.asList(new Perfil(1L), new Perfil(3L))) ||
-                perfis.contains(Arrays.asList(new Perfil(2L), new Perfil(3L)))){
-            attr.addFlashAttribute("falha", "Paciente não pode ser ADmin 1/ou Médico.");
+                perfis.containsAll(Arrays.asList(new Perfil(1L), new Perfil(3L))) ||
+                perfis.containsAll(Arrays.asList(new Perfil(2L), new Perfil(3L)))){
+            attr.addFlashAttribute("falha", "Paciente não pode ser Admin e/ou Médico.");
             attr.addFlashAttribute("usuario", usuario);
         }else {
-            service.salvarUsuario(usuario);
-            attr.addFlashAttribute("sucesso", "Operação realizada com sucesso!");
+            try {
+                service.salvarUsuario(usuario);
+                attr.addFlashAttribute("sucesso", "Operação realizada com sucesso!");
+            } catch(DataIntegrityViolationException ex) {
+                attr.addFlashAttribute("falha", "Usuário já cadastrado no sistema, Email ja existente!");
+            }
+
         }
         return "redirect:/u/novo/cadastro/usuario";
     }
