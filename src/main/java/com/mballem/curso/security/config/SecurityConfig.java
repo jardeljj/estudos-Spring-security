@@ -1,5 +1,6 @@
 package com.mballem.curso.security.config;
 
+import com.mballem.curso.security.domain.PerfilTipo;
 import com.mballem.curso.security.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -13,6 +14,10 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 public class SecurityConfig {
+
+    private static final String ADMIN = PerfilTipo.ADMIN.getDesc();
+    private static final String MEDICO = PerfilTipo.MEDICO.getDesc();
+    private static final String PACIENTE = PerfilTipo.PACIENTE.getDesc();
 
     @Autowired
     private UsuarioService service;
@@ -29,6 +34,12 @@ public class SecurityConfig {
 
                         // acessos privados medicos
                         .requestMatchers("/medicos/**").hasAuthority("MEDICO")
+
+                        // acessos privados pacientes
+                        .requestMatchers("/pacientes/**").hasAuthority("PACIENTE")
+
+                        // acessos privados especialidades
+                        .requestMatchers("especialidades/**").hasAuthority("ADMIN")
 
                         // Permite as páginas públicas
                         .anyRequest().authenticated() // Exige autenticação para o restante
