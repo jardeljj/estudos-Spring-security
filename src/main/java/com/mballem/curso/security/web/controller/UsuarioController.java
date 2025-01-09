@@ -81,10 +81,10 @@ public class UsuarioController {
         Usuario us = service.buscarPorIdePerfis(usuarioId, perfisId);
 
         if(us.getPerfis().contains(new Perfil(PerfilTipo.ADMIN.getCod())) &&
-               !us.getPerfis().contains(new Perfil(PerfilTipo.MEDICO.getCod()))){
+           !us.getPerfis().contains(new Perfil(PerfilTipo.MEDICO.getCod())) ){
 
-               return new ModelAndView("usuario/cadastro", "usuario", us);
-        } else if (us.getPerfis().contains(new Perfil(PerfilTipo.MEDICO.getCod()))){
+           return new ModelAndView("usuario/cadastro", "usuario", us);
+        } else if (us.getPerfis().contains(new Perfil(PerfilTipo.MEDICO.getCod()))) {
 
             return new ModelAndView("especialidade/especialidade");
         } else if (us.getPerfis().contains(new Perfil(PerfilTipo.PACIENTE.getCod()))) {
