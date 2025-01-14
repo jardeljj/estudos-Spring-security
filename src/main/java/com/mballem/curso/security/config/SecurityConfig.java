@@ -33,13 +33,14 @@ public class SecurityConfig {
                         .requestMatchers("/u/**").hasAuthority("ADMIN")
 
                         // acessos privados medicos
+                        .requestMatchers("/medicos/dados", "/medicos/salvar", "/medicos/editar").hasAnyAuthority("MEDICO", "ADMIN")
                         .requestMatchers("/medicos/**").hasAuthority("MEDICO")
 
                         // acessos privados pacientes
                         .requestMatchers("/pacientes/**").hasAuthority("PACIENTE")
 
                         // acessos privados especialidades
-                        .requestMatchers("especialidades/**").hasAuthority("ADMIN")
+                        .requestMatchers("/especialidades/**").hasAuthority("ADMIN")
 
                         // Permite as páginas públicas
                         .anyRequest().authenticated() // Exige autenticação para o restante
