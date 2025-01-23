@@ -13,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
+
 public class SecurityConfig {
 
     private static final String ADMIN = PerfilTipo.ADMIN.getDesc();
@@ -30,19 +31,23 @@ public class SecurityConfig {
                         .requestMatchers("/", "/home").permitAll()
 
                         // acessos privados adm
-                        .requestMatchers("/u/**").hasAuthority("ADMIN")
+                        .requestMatchers("/u/**").hasAuthority(ADMIN)
+
 
                         // acessos privados medicos
-                        .requestMatchers("/medicos/dados", "/medicos/salvar", "/medicos/editar").hasAnyAuthority("MEDICO", "ADMIN")
-                        .requestMatchers("/medicos/**").hasAuthority("MEDICO")
+                        .requestMatchers("/medicos/dados", "/medicos/salvar", "/medicos/editar").hasAnyAuthority(MEDICO, ADMIN)
+                        .requestMatchers("/medicos/**").hasAuthority(MEDICO)
 
                         // acessos privados pacientes
-                        .requestMatchers("/pacientes/**").hasAuthority("PACIENTE")
+                        .requestMatchers("/pacientes/**").hasAuthority(PACIENTE)
 
                         // acessos privados especialidades
-                        .requestMatchers("/especialidades/**").hasAuthority("ADMIN")
+                        .requestMatchers("/especialidades/datatables/server/medico/*").hasAnyAuthority(MEDICO, ADMIN)
+                        .requestMatchers("/especialidades/titulo").hasAnyAuthority(MEDICO, ADMIN)
+                        .requestMatchers("/especialidades/**").hasAuthority(ADMIN)
 
-                        // Permite as páginas públicas
+
+                        // Permite as páginas
                         .anyRequest().authenticated() // Exige autenticação para o restante
                 )
                 .formLogin(login -> login

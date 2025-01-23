@@ -10,8 +10,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @Service
 public class EspecialidadeService {
@@ -52,4 +54,17 @@ public class EspecialidadeService {
     public List<String> buscarEspecialidadeByTermo(String termo) {
         return repository.findEspecialidadesByTermo(termo);
     }
+
+    @Transactional(readOnly = true)
+    public Set<Especialidade> buscarPorTitulos(String[] titulos) {
+        return repository.findByTitulos(titulos);
+    }
+
+    @Transactional(readOnly = true)
+	public Map<String, Object> buscarEspecialidadesPorMedico(Long id, HttpServletRequest request) {
+		datatables.setRequest(request);
+		datatables.setColunas(DatatablesColunas.ESPECIALIDADES);
+		Page<Especialidade> page = repository.findByIdMedico(id, datatables.getPageable());
+		return datatables.getResponse(page);
+	}
 }

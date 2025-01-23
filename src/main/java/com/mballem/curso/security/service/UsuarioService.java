@@ -38,10 +38,13 @@ public class UsuarioService implements UserDetailsService {
 
         Usuario usuario = buscarPorEmail(username);
 
+
         return new User(
                 usuario.getEmail(),
                 usuario.getSenha(),
                 AuthorityUtils.createAuthorityList(getAuthorities(usuario.getPerfis()))
+
+
         );
     }
 
