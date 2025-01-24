@@ -49,4 +49,17 @@ public class PacienteController {
         return "paciente/cadastro";
     }
 
+    // editar o form de dados pessoais do paciente com verificalçao de senha
+    @PostMapping("/editar")
+    public String edit(Paciente paciente, ModelMap model, @AuthenticationPrincipal User user){
+        Usuario u = usuarioService.buscarPorEmail(user.getUsername());
+        if (UsuarioService.isSenhaCorreta(paciente.getUsuario().getSenha(), u.getSenha())){
+            service.edit(paciente);
+            model.addAttribute("sucesso", "Seus dados foram atualizados com sucesso.");
+        }else {
+            model.addAttribute("falha", "Sua senha não confere, tente novamente.");
+        }
+        return "paciente/cadastro";
+    }
+
 }

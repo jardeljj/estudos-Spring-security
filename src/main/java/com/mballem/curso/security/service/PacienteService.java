@@ -21,4 +21,11 @@ public class PacienteService {
     public void salvar(Paciente paciente) {
         repository.save(paciente);
     }
+
+    @Transactional(readOnly = false)
+    public void edit(Paciente paciente) {
+        Paciente p2 = repository.findById(paciente.getId()).get();
+        p2.setNome(paciente.getNome());
+        p2.setDtNascimento(paciente.getDtNascimento());
+    }
 }
