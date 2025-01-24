@@ -50,13 +50,30 @@ $(document).ready(function() {
 		]
 	});
 	
-	$('#table-usuarios tbody').on('click', '[id*="dp_"]', function () {
-		var data = table.row($(this).parents('tr')).data();
-		var aux = new Array();
+    $('#table-usuarios tbody').on('click', '[id*="dp_"]', function () {
+    	var data = table.row($(this).parents('tr')).data();
+    	var aux = new Array();
 		$.each(data.perfis, function( index, value ) {
 			  aux.push(value.id);
 		});
 		document.location.href = '/u/editar/dados/usuario/' + data.id + '/perfis/' + aux;
-	} );
-	
-});	
+    } );
+
+});
+
+$('.pass').keyup(function() {
+    const senha1 = $('#senha1').val();
+    const senha2 = $('#senha2').val();
+
+    if (senha1 === senha2 && senha1.length > 0) {
+        $('#senha3').removeAttr('disabled');
+    } else {
+        $('#senha3').attr('disabled', 'disabled');
+    }
+});
+
+// Habilite o campo 'senha3' ao enviar o formulário
+$('form').submit(function() {
+    $('#senha3').removeAttr('disabled');
+});
+
