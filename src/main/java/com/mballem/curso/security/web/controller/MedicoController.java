@@ -5,6 +5,7 @@ import com.mballem.curso.security.domain.Usuario;
 import com.mballem.curso.security.service.MedicoService;
 import com.mballem.curso.security.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
@@ -69,5 +70,12 @@ public class MedicoController {
         attr.addFlashAttribute("sucesso", "Especialidade removida com sucesso!");
         return "redirect:/medicos/dados";
     }
-    
+
+    // buscar medicos por especialidade via ajax
+    @GetMapping("/especialidade/titulo/{titulo}")
+    public ResponseEntity<?> getMedicosPorEspecialidade(@PathVariable("titulo") String titulo){
+        return ResponseEntity.ok(service.buscarMedicosPorEspecialidade(titulo));
+    }
+
+
 }

@@ -36,6 +36,7 @@ public class SecurityConfig {
 
 
                         // acessos privados medicos
+                        .requestMatchers("/medicos/especialidade/titulo/*").hasAuthority(PACIENTE)
                         .requestMatchers("/medicos/dados", "/medicos/salvar", "/medicos/editar").hasAnyAuthority(MEDICO, ADMIN)
                         .requestMatchers("/medicos/**").hasAuthority(MEDICO)
 
@@ -44,7 +45,7 @@ public class SecurityConfig {
 
                         // acessos privados especialidades
                         .requestMatchers("/especialidades/datatables/server/medico/*").hasAnyAuthority(MEDICO, ADMIN)
-                        .requestMatchers("/especialidades/titulo").hasAnyAuthority(MEDICO, ADMIN)
+                        .requestMatchers("/especialidades/titulo").hasAnyAuthority(MEDICO, ADMIN, PACIENTE)
                         .requestMatchers("/especialidades/**").hasAuthority(ADMIN)
 
 
