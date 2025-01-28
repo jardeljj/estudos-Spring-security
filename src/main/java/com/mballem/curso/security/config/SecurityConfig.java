@@ -36,7 +36,7 @@ public class SecurityConfig {
 
 
                         // acessos privados medicos
-                        .requestMatchers("/medicos/especialidade/titulo/*").hasAuthority(PACIENTE)
+                        .requestMatchers("/medicos/especialidade/titulo/*").hasAnyAuthority(MEDICO,PACIENTE)
                         .requestMatchers("/medicos/dados", "/medicos/salvar", "/medicos/editar").hasAnyAuthority(MEDICO, ADMIN)
                         .requestMatchers("/medicos/**").hasAuthority(MEDICO)
 
