@@ -3,6 +3,7 @@ package com.mballem.curso.security.service;
 import com.mballem.curso.security.domain.Agendamento;
 import com.mballem.curso.security.domain.Horario;
 import com.mballem.curso.security.repository.AgendamentoRepository;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,5 +26,15 @@ public class AgendamentoService {
     @Transactional(readOnly = false)
     public void salvar(Agendamento agendamento) {
         repository.save(agendamento);
+    }
+
+    @Transactional(readOnly = true)
+    public Object buscarHistoricoPorPacienteEmail(String username, HttpServletRequest request) {
+        return null;
+    }
+
+    @Transactional(readOnly = true)
+    public Object buscarHistoricoPorMedicoEmail(String username, HttpServletRequest request) {
+        return null;
     }
 }
