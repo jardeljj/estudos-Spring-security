@@ -88,6 +88,9 @@ public class AgendamentoController {
     @GetMapping("/editar/consulta/{id}")
     public String preEditarConsultaPaciente(@PathVariable("id") Long id,
                                             ModelMap model, @AuthenticationPrincipal User user){
+
+        Agendamento agendamento = service.buscarPorId(id);
+        model.addAttribute("agendamento", agendamento);
         return "agendamento/cadastro";
     }
 
