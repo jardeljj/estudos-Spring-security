@@ -85,11 +85,13 @@ public class AgendamentoController {
         return ResponseEntity.notFound().build();
     }
 
+    // localizar agendamento pelo id e envialo para a pagina de cadastro
     @GetMapping("/editar/consulta/{id}")
     public String preEditarConsultaPaciente(@PathVariable("id") Long id,
                                             ModelMap model, @AuthenticationPrincipal User user){
 
-        Agendamento agendamento = service.buscarPorId(id);
+        Agendamento agendamento = service.buscarPorIdEUsuario(id, user.getUsername());
+
         model.addAttribute("agendamento", agendamento);
         return "agendamento/cadastro";
     }
