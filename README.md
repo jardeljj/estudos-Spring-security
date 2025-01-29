@@ -22,11 +22,11 @@ public class SecurityConfig {
 ## 🛠️ Como Rodar o Projeto
 1. Clone o repositório:
    ```sh
-   git clone https://github.com/seu-usuario/seu-repositorio.git
+   git clone https://github.com/jardeljj/estudos-Spring-security.git
    ```
 2. Acesse a pasta do projeto:
    ```sh
-   cd nome-do-projeto
+   cd estudos-Spring-security
    ```
 3. Compile e rode o projeto com Maven:
    ```sh
