@@ -56,4 +56,9 @@ public class MedicoService {
     public List<Medico> buscarMedicosPorEspecialidade(String titulo) {
         return repository.findByMedicosPorEspecialidade(titulo);
     }
+
+    @Transactional(readOnly = true)
+    public boolean existeEspecialidadeAgendada(Long idMed, Long idEsp) {
+        return repository.hasEspecialidadeAgendada(idMed,idEsp).isPresent();
+    }
 }
