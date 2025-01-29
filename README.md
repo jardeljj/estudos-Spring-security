@@ -39,4 +39,5 @@ public class SecurityConfig {
 
 ---
 📌 **Status do Projeto**: Em andamento 🚧
+#JardelDev
 
