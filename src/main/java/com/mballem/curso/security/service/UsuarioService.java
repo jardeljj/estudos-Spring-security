@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class UsuarioService implements UserDetailsService {
@@ -36,16 +37,12 @@ public class UsuarioService implements UserDetailsService {
 
     @Override @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-
-        Usuario usuario = buscarPorEmail(username);
-
-
+        Usuario usuario = buscarPorEmailAtivo(username)
+                .orElseThrow(() -> new UsernameNotFoundException("Usuario " + username + " não encontrado."));
         return new User(
                 usuario.getEmail(),
                 usuario.getSenha(),
                 AuthorityUtils.createAuthorityList(getAuthorities(usuario.getPerfis()))
-
-
         );
     }
 
@@ -105,5 +102,11 @@ public class UsuarioService implements UserDetailsService {
         usuario.setSenha(crypt);
         usuario.addPerfil(PerfilTipo.PACIENTE);
         repository.save(usuario);
+    }
+
+    @Transactional(readOnly = true)
+    public Optional<Usuario> buscarPorEmailAtivo(String email){
+
+        return repository.findByEmailAndAtivo(email);
     }
 }
