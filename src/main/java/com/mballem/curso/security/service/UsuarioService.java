@@ -3,6 +3,7 @@ package com.mballem.curso.security.service;
 import com.mballem.curso.security.datatables.Datatables;
 import com.mballem.curso.security.datatables.DatatablesColunas;
 import com.mballem.curso.security.domain.Perfil;
+import com.mballem.curso.security.domain.PerfilTipo;
 import com.mballem.curso.security.domain.Usuario;
 import com.mballem.curso.security.repository.UsuarioRepository;
 import jakarta.servlet.http.HttpServletRequest;
@@ -98,4 +99,11 @@ public class UsuarioService implements UserDetailsService {
         repository.save(usuario);
     }
 
+    @Transactional(readOnly = false)
+    public void salvarCadastroPaciente(Usuario usuario) {
+        String crypt = new BCryptPasswordEncoder().encode(usuario.getSenha());
+        usuario.setSenha(crypt);
+        usuario.addPerfil(PerfilTipo.PACIENTE);
+        repository.save(usuario);
+    }
 }
