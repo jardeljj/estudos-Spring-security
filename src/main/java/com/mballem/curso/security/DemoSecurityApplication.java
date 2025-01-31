@@ -1,5 +1,6 @@
 package com.mballem.curso.security;
 
+import com.mballem.curso.security.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -17,14 +18,11 @@ public class DemoSecurityApplication implements CommandLineRunner {
 	}
 
 	@Autowired
-	JavaMailSender sender;
+	EmailService service;
+
 
 	@Override
 	public void run(String... args) throws Exception {
-		SimpleMailMessage simple = new SimpleMailMessage();
-		simple.setTo("Seu.email@outlook.com.br");
-		simple.setText("Primeiro Teste se der bom deu!");
-		simple.setSubject("Testando isso aqui");
-		sender.send(simple);
+		service.enviarPedidoDeConfirmacaoDeCadastro("seuemail@outlook.com.br","7654ioi");
 	}
 }
