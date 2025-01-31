@@ -10,15 +10,6 @@ Este repositório tem como objetivo o estudo e a implementação de segurança e
 
 ## 🔐 Configuração do Spring Security 6
 
-### Exemplo de Configuração de Segurança
-```java
-@Configuration
-@EnableMethodSecurity
-public class SecurityConfig {
-    // Configurações de segurança do sistema
-}
-```
-
 ## 🛠️ Como Rodar o Projeto
 1. Clone o repositório:
    ```sh
@@ -32,6 +23,9 @@ public class SecurityConfig {
    ```sh
    ./mvnw spring-boot:run
    ```
+Obs: 🚨🚨Atenção com as classes de configurações editaveis para compilar o projeto como servidor de email.
+  
+
 
 ## 📚 Referências
 - [Documentação Oficial do Spring Security](https://docs.spring.io/spring-security/reference/index.html)
