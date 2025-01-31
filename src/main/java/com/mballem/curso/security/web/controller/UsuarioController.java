@@ -6,6 +6,7 @@ import com.mballem.curso.security.domain.PerfilTipo;
 import com.mballem.curso.security.domain.Usuario;
 import com.mballem.curso.security.service.MedicoService;
 import com.mballem.curso.security.service.UsuarioService;
+import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -146,7 +147,7 @@ public class UsuarioController {
 
     // recebe o form da página cadastrar-se
     @PostMapping("/cadastro/paciente/salvar")
-    public String salvarCadastroPaciente(Usuario usuario, BindingResult result){
+    public String salvarCadastroPaciente(Usuario usuario, BindingResult result) throws MessagingException {
         try {
             service.salvarCadastroPaciente(usuario);
         }catch (DataIntegrityViolationException ex){
