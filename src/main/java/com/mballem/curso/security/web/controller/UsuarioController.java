@@ -191,11 +191,11 @@ public class UsuarioController {
     // salvar a nova senha via recuperacao de senha
     @PostMapping("/p/nova/senha/")
     public String confirmacaoDeRedefinicaoDeSenha(Usuario usuario, ModelMap model) {
-        System.out.println("Entrou no método confirmacaoDeRedefinicaoDeSenha!");
+
         Usuario u = service.buscarPorEmail(usuario.getEmail());
         // Log para conferir os valores
-        System.out.println("Código enviado: " + u.getCodigoVerificador());
-        System.out.println("Código fornecido: " + usuario.getCodigoVerificador());
+        //System.out.println("Código enviado: " + u.getCodigoVerificador());
+        //.out.println("Código fornecido: " + usuario.getCodigoVerificador());
 
         if (!usuario.getCodigoVerificador().equals(u.getCodigoVerificador())) {
             model.addAttribute("falha", "Código verificador não confere.");
