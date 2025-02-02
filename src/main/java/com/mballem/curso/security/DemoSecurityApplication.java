@@ -23,6 +23,6 @@ public class DemoSecurityApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		service.enviarPedidoDeConfirmacaoDeCadastro("seuemail@outlook.com.br","7654ioi");
+		//service.enviarPedidoDeConfirmacaoDeCadastro("seuemail@outlook.com.br","7654ioi");
 	}
 }

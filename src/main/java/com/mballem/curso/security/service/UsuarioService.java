@@ -9,6 +9,7 @@ import com.mballem.curso.security.exception.AcessoNegadoException;
 import com.mballem.curso.security.repository.UsuarioRepository;
 import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletRequest;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -21,10 +22,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.nio.charset.StandardCharsets;
-import java.util.Base64;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
+import java.util.random.RandomGenerator;
 
 @Service
 public class UsuarioService implements UserDetailsService {
@@ -134,4 +133,15 @@ public class UsuarioService implements UserDetailsService {
         usuario.setAtivo(true);
     }
 
+    @Transactional(readOnly = false)
+    public void pedidoRedefinicaoDeSenha(String email) throws MessagingException {
+        Usuario usuario = buscarPorEmailAtivo(email)
+                .orElseThrow(() -> new UsernameNotFoundException("Usuario " + email + " não encontrado."));;
+
+        String verificador = RandomStringUtils.randomAlphanumeric(6);
+
+        usuario.setCodigoVerificador(verificador);
+
+        emailService.enviarPedidoRedefinicaoSenha(email, verificador);
+    }
 }

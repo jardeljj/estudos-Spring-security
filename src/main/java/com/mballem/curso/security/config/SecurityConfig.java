@@ -33,6 +33,7 @@ public class SecurityConfig {
                         .requestMatchers("/", "/home").permitAll()
                         .requestMatchers("/u/novo/cadastro","/u/cadastro/realizado","/u/cadastro/paciente/salvar").permitAll()
                         .requestMatchers("/u/confirmacao/cadastro").permitAll()
+                        .requestMatchers("/u/p/**").permitAll()
 
                         // acessos privados adm
                         .requestMatchers("/u/editar/senha", "/u/confirmar/senha").hasAnyAuthority(PACIENTE,MEDICO)
@@ -68,6 +69,11 @@ public class SecurityConfig {
                 )
                 .exceptionHandling(exception -> exception
                         .accessDeniedPage("/acesso-negado")
+                )
+                .rememberMe(remember -> remember
+                        .key("chave-secreta-remember-me") // Chave usada para assinar os tokens de remember me
+                        .tokenValiditySeconds(604800) // Tempo de expiração do cookie (7 dias)
+                        .userDetailsService(service) // Serviço de usuários para carregar as credenciais
                 );
 
         return http.build();
