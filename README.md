@@ -32,6 +32,6 @@ Obs: 🚨🚨Atenção com as classes de configurações editaveis para compilar
 - [Spring Boot 3.x Migration Guide](https://docs.spring.io/spring-boot/docs/current/reference/html/migration.html)
 
 ---
-📌 **Status do Projeto**: Em andamento 🚧
+📌 **Status do Projeto**: Concluído ✅
 #JardelDev
 
