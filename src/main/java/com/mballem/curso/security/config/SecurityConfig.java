@@ -3,16 +3,19 @@ package com.mballem.curso.security.config;
 import com.mballem.curso.security.domain.PerfilTipo;
 import com.mballem.curso.security.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.core.session.SessionRegistry;
+import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.session.HttpSessionEventPublisher;
 
 @Configuration
 @EnableMethodSecurity(prePostEnabled = true)
@@ -75,6 +78,13 @@ public class SecurityConfig {
                         .tokenValiditySeconds(604800) // Tempo de expiração do cookie (7 dias)
                         .userDetailsService(service) // Serviço de usuários para carregar as credenciais
                 );
+                http.sessionManagement(session -> session
+                    .maximumSessions(1)
+                    .expiredUrl("/expired")
+                    .maxSessionsPreventsLogin(true)
+                    .sessionRegistry(sessionRegistry())
+                );
+
 
         return http.build();
     }
@@ -89,6 +99,16 @@ public class SecurityConfig {
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
+    }
+
+    @Bean
+    public SessionRegistry sessionRegistry(){
+        return new SessionRegistryImpl();
+    }
+
+    @Bean
+    public ServletListenerRegistrationBean<?> servletListenerRegistrationBean(){
+        return new ServletListenerRegistrationBean<>(new HttpSessionEventPublisher());
     }
 	
 }
