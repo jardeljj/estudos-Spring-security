@@ -33,7 +33,7 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/webjars/**", "/css/**", "/image/**", "/js/**").permitAll() // Permite recursos estáticos
-                        .requestMatchers("/", "/home").permitAll()
+                        .requestMatchers("/", "/home", "/expired").permitAll()
                         .requestMatchers("/u/novo/cadastro","/u/cadastro/realizado","/u/cadastro/paciente/salvar").permitAll()
                         .requestMatchers("/u/confirmacao/cadastro").permitAll()
                         .requestMatchers("/u/p/**").permitAll()
@@ -81,7 +81,7 @@ public class SecurityConfig {
                 http.sessionManagement(session -> session
                     .maximumSessions(1)
                     .expiredUrl("/expired")
-                    .maxSessionsPreventsLogin(true)
+                    .maxSessionsPreventsLogin(false)
                     .sessionRegistry(sessionRegistry())
                 );
 
